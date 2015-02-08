@@ -10,11 +10,77 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "vagrant-centos6.5"
-  config.vm.box_url = [
-    "file://vboxes/package.box", # Specify local cache.
-    #"https://github.com/2creatives/vagrant-centos/releases/download/v6.5.3/centos65-x86_64-20140116.box",
-  ]
+  config.vm.define "batch" do |node|
+      node.vm.box = "batch"
+      node.vm.box_url = [
+          "file://vboxes/batch.box", # Specify local cache.
+          #https://github.com/2creatives/vagrant-centos/releases/download/v6.5.3/centos65-x86_64-20140116.box",
+      ]
+      node.vm.network "public_network", ip: "192.168.100.110"
+      node.vm.provider "virtualbox" do |vb|
+         vb.name = "batch"
+         vb.gui = false
+         vb.customize ["modifyvm", :id, "--memory", "512"]
+      end
+      node.ssh.forward_agent = true
+      node.ssh.private_key_path = "~/.ssh/id_rsa"
+      node.ssh.username = "vagrant"
+      node.ssh.password = "vagrant"
+  end
+
+  config.vm.define "www" do |node|
+      node.vm.box = "www"
+      node.vm.box_url = [
+          "file://vboxes/www.box", # Specify local cache.
+          #https://github.com/2creatives/vagrant-centos/releases/download/v6.5.3/centos65-x86_64-20140116.box",
+      ]
+      node.vm.network "public_network", ip: "192.168.100.111"
+      node.vm.provider "virtualbox" do |vb|
+         vb.name = "www"
+         vb.gui = false
+         vb.customize ["modifyvm", :id, "--memory", "512"]
+      end
+      node.ssh.forward_agent = true
+      node.ssh.private_key_path = "~/.ssh/id_rsa"
+      node.ssh.username = "vagrant"
+      node.ssh.password = "vagrant"
+  end
+
+  config.vm.define "db-master" do |node|
+      node.vm.box = "db-master"
+      node.vm.box_url = [
+          "file://vboxes/db-master.box", # Specify local cache.
+          #https://github.com/2creatives/vagrant-centos/releases/download/v6.5.3/centos65-x86_64-20140116.box",
+      ]
+      node.vm.network "public_network", ip: "192.168.100.112"
+      node.vm.provider "virtualbox" do |vb|
+         vb.name = "db-master"
+         vb.gui = false
+         vb.customize ["modifyvm", :id, "--memory", "512"]
+      end
+      node.ssh.forward_agent = true
+      node.ssh.private_key_path = "~/.ssh/id_rsa"
+      node.ssh.username = "vagrant"
+      node.ssh.password = "vagrant"
+  end
+
+  config.vm.define "db-slave" do |node|
+      node.vm.box = "db-slave"
+      node.vm.box_url = [
+          "file://vboxes/db-slave.box", # Specify local cache.
+          #https://github.com/2creatives/vagrant-centos/releases/download/v6.5.3/centos65-x86_64-20140116.box",
+      ]
+      node.vm.network "public_network", ip: "192.168.100.113"
+      node.vm.provider "virtualbox" do |vb|
+         vb.name = "db-slave"
+         vb.gui = false
+         vb.customize ["modifyvm", :id, "--memory", "512"]
+      end
+      node.ssh.forward_agent = true
+      node.ssh.private_key_path = "~/.ssh/id_rsa"
+      node.ssh.username = "vagrant"
+      node.ssh.password = "vagrant"
+  end
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -28,35 +94,35 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  # config.vm.network "private_network", ip: "192.168.33.10"
+  # config.vm.network "public_network", ip: "192.168.100.110"
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
   # your network.
-  config.vm.network "public_network"
+  # config.vm.network "public_network"
 
   # If true, then any SSH connections made will enable agent forwarding.
   # Default value: false
-  config.ssh.forward_agent = true
+  # config.ssh.forward_agent = true
 
   # Share an additional folder to the guest VM. The first argument is
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  # config.vm.synced_folder "../data", "/vagrant_data"
+  # config.vm.synced_folder "sync-data", "/sync-data"
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
   #
-  config.vm.provider "virtualbox" do |vb|
-     vb.name = "vagrant-centos6.5"
+  #config.vm.provider "virtualbox" do |vb|
+  #   vb.name = "batch"
   #   # Don't boot with headless mode
-     vb.gui = false
+  #   vb.gui = false
   #
   #   # Use VBoxManage to customize the VM. For example to change memory:
-     vb.customize ["modifyvm", :id, "--memory", "512"]
-  end
+  #   vb.customize ["modifyvm", :id, "--memory", "512"]
+  #end
   #
   # View the documentation for the provider you're using for more
   # information on available options.
