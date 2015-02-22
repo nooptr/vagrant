@@ -49,8 +49,8 @@ DROP TABLE IF EXISTS `chapters`;
 CREATE TABLE `chapters` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
-  `manga_id` int(10) NOT NULL,
-  `avatar` text NOT NULL,
+  `comic_id` int(10) NOT NULL,
+  `icon` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -90,31 +90,31 @@ LOCK TABLES `data` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `manga`
+-- Table structure for table `comic`
 --
 
-DROP TABLE IF EXISTS `manga`;
+DROP TABLE IF EXISTS `comic`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `manga` (
+CREATE TABLE `comic` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `title_short` varchar(255) NOT NULL,
   `title_long` varchar(255) DEFAULT NULL,
   `region_id` int(10) NOT NULL,
   `cate_id` int(10) NOT NULL,
   `description` text,
-  `avatar` text NOT NULL,
+  `icon` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `manga`
+-- Dumping data for table `comic`
 --
 
-LOCK TABLES `manga` WRITE;
-/*!40000 ALTER TABLE `manga` DISABLE KEYS */;
-/*!40000 ALTER TABLE `manga` ENABLE KEYS */;
+LOCK TABLES `comic` WRITE;
+/*!40000 ALTER TABLE `comic` DISABLE KEYS */;
+/*!40000 ALTER TABLE `comic` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
